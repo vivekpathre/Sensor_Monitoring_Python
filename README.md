@@ -14,12 +14,12 @@ We have deployed a Mosquitto MQTT broker using Docker to facilitate communicatio
 
 A Python MQTT client has been created to mimic multiple sensor readings and publish them to MQTT topics such as `sensors/temperature` and `sensors/humidity`. The structure of the JSON payload for sensor readings is as follows:
 
-```json
+
 {
     "sensor_id": "unique_sensor_id",
     "value": "<reading_value>",
     "timestamp": "ISO8601_formatted_date_time"
-} ```
+}
 
 ### MQTT Subscriber
 
@@ -93,4 +93,3 @@ During the development of this project, we encountered some challenges, includin
 Please refer to the project documentation for more details on the challenges faced and their respective solutions.
 
 For any questions or issues, please contact your@email.com.
-"""
