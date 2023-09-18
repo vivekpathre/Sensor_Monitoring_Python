@@ -19,7 +19,7 @@ A Python MQTT client has been created to mimic multiple sensor readings and publ
     "sensor_id": "unique_sensor_id",
     "value": "<reading_value>",
     "timestamp": "ISO8601_formatted_date_time"
-}```
+} ```
 
 ### MQTT Subscriber
 
