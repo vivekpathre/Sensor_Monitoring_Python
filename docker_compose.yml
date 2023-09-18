@@ -1,0 +1,91 @@
+version: '3'
+
+services:
+  publisher:
+    build:
+      context: ./publisher
+    container_name: publisher_container
+    depends_on:
+      - mqtt_broker
+    environment:
+      - MQTT_BROKER_HOST=mqtt_broker
+      - MQTT_BROKER_PORT=1883
+
+  subscriber_mongo:
+    build:
+      context: ./subscriber_mongo
+    container_name: subscriber_mongo_container
+    depends_on:
+      - mqtt_broker
+      - mongo
+    environment:
+      - MQTT_BROKER_HOST=mqtt_broker
+      - MQTT_BROKER_PORT=1883
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+
+  subscriber_redis:
+    build:
+      context: ./subscriber_redis
+    container_name: subscriber_redis_container
+    depends_on:
+      - mqtt_broker
+      - redis
+    environment:
+      - MQTT_BROKER_HOST=mqtt_broker
+      - MQTT_BROKER_PORT=1883
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  api1:
+    build:
+      context: ./api1
+    container_name: api1_container
+    depends_on:
+      - mqtt_broker
+    environment:
+      - MQTT_BROKER_HOST=mqtt_broker
+      - MQTT_BROKER_PORT=1883
+
+  api2:
+    build:
+      context: ./api2
+    container_name: api2_container
+    depends_on:
+      - mqtt_broker
+    environment:
+      - MQTT_BROKER_HOST=mqtt_broker
+      - MQTT_BROKER_PORT=1883
+
+  mqtt_broker:
+    image: eclipse-mosquitto
+    container_name: mqtt_broker_container
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - config:/mosquitto/config
+      - data:/mosquitto/data
+      - log:/mosquitto/log
+
+  redis:
+    image: redis
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: mongo
+    container_name: mongo_container
+    ports:
+      - "27017:27017"
+
+volumes:
+  config:
+  data:
+  log:
+
+networks:
+  default:
+    name: mqtt5-network
+
